@@ -65,6 +65,36 @@ fn get_internal() -> usize {
     syscall::getpid().unwrap()
 }
 
+#[cfg(all(
+    target_arch = "wasm32",
+    target_vendor = "unknown",
+    target_os = "unknown",
+    not(target_feature = "atomics"),
+))]
+#[inline]
+fn get_internal() -> usize {
+    0
+}
+
+#[cfg(all(
+    target_arch = "wasm32",
+    target_vendor = "unknown",
+    target_os = "unknown",
+    target_feature = "atomics",
+))]
+#[inline]
+fn get_internal() -> usize {
+    use std::sync::atomic::{AtomicUsize, Ordering};
+
+    static COUNTER: AtomicUsize = AtomicUsize::new(0);
+
+    thread_local! {
+        static ID: usize = COUNTER.fetch_add(1, Ordering::Relaxed);
+    }
+
+    ID.with(|id| *id)
+}
+
 #[test]
 fn distinct_threads_have_distinct_ids() {
     use std::sync::mpsc;
