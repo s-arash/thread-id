@@ -1,3 +1,12 @@
+# v4.1.0
+
+Released 2023-05-15.
+
+ * Add support for the `wasm32-unknown-unknown` target.
+ * Ensures compatibility with Rust 1.34.2 through 1.69.0.
+
+Thanks to dAxpeDDa for contributing to this release.
+
 # v4.0.0
 
 Released 2021-03-24.
