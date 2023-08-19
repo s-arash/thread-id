@@ -13,7 +13,7 @@ documentation = "https://docs.rs/thread-id"
 appveyor = { repository = "ruuda/thread-id-y5v5o", branch = "v4.1.0" }
 
 [target.'cfg(unix)'.dependencies]
-libc = "0.2.6"
+libc = "0.2.147"
 
 [target.'cfg(windows)'.dependencies]
 winapi = { version = "0.3", features = ["processthreadsapi"] }

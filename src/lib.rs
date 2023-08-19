@@ -46,10 +46,36 @@ pub fn get() -> usize {
     get_internal()
 }
 
-#[cfg(unix)]
+#[cfg(all(
+    unix,
+    not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos"
+    ))
+))]
 #[inline]
 fn get_internal() -> usize {
     unsafe { libc::pthread_self() as usize }
+}
+
+#[cfg(all(
+    unix,
+    any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "tvos",
+        target_os = "watchos"
+    )
+))]
+#[inline]
+fn get_internal() -> usize {
+    let mut tid: u64 = 0;
+    unsafe {
+        libc::pthread_threadid_np(libc::pthread_self(), &mut tid as *mut u64);
+    };
+    tid as usize
 }
 
 #[cfg(windows)]
