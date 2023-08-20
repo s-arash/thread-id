@@ -1,3 +1,13 @@
+# v4.2.0
+
+To be released.
+
+ * Switch to `pthread_threadid_np` instead of `pthread_self` on Apple platforms.
+   The latter was not guaranteed to be unique for the lifetime of the process.
+ * Ensures compatibility with Rust 1.34.2 through TODO.
+
+Thanks to Charles Hubain for contributing to this release.
+
 # v4.1.0
 
 Released 2023-05-15.
