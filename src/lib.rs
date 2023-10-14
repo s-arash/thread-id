@@ -33,9 +33,6 @@ extern crate libc;
 #[cfg(windows)]
 extern crate winapi;
 
-#[cfg(target_os = "redox")]
-extern crate syscall;
-
 /// Returns a number that is unique to the calling thread.
 ///
 /// Calling this function twice from the same thread will return the same
@@ -82,13 +79,6 @@ fn get_internal() -> usize {
 #[inline]
 fn get_internal() -> usize {
     unsafe { winapi::um::processthreadsapi::GetCurrentThreadId() as usize }
-}
-
-#[cfg(target_os = "redox")]
-#[inline]
-fn get_internal() -> usize {
-    // Each thread has a separate pid on Redox.
-    syscall::getpid().unwrap()
 }
 
 #[cfg(all(
