@@ -1,3 +1,17 @@
+# v4.2.1
+
+Released 2023-10-16.
+
+ * Remove Redox-specific dependencies in favor of the `libc` crate, in
+   accordance [with Redox' ABI stability plans][redox-abi]. This makes Redox
+   use the same pthreads calls as the other Unix-like platforms. ([#15][15])
+ * Ensures compatibility with Rust 1.34.2 through 1.73.0.
+
+Thanks to 4lDO2 for contributing to this release.
+
+[redox-abi]: https://redox-os.org/news/development-priorities-2023-09/
+[15]: https://github.com/ruuda/thread-id/pull/15
+
 # v4.2.0
 
 Released 2023-08-20.
