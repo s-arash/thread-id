@@ -92,11 +92,14 @@ fn get_internal() -> usize {
     0
 }
 
-#[cfg(all(
-    target_arch = "wasm32",
-    target_vendor = "unknown",
-    target_os = "unknown",
-    target_feature = "atomics",
+#[cfg(any(
+    target_env = "sgx",
+    all(
+        target_arch = "wasm32",
+        target_vendor = "unknown",
+        target_os = "unknown",
+        target_feature = "atomics",
+    )
 ))]
 #[inline]
 fn get_internal() -> usize {
