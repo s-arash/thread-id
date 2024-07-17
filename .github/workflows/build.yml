@@ -40,3 +40,17 @@ jobs:
         run: "rustup toolchain install ${{ matrix.rust }} && rustup target add wasm32-unknown-unknown --toolchain ${{ matrix.rust }}"
       - name: Build
         run: "cargo +${{ matrix.rust }} build --target wasm32-unknown-unknown --verbose"
+
+  check-sgx:
+    strategy:
+      matrix:
+        rust: ["1.50.0"]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.5.2
+      - name: Install toolchain & targets
+        run: "rustup toolchain install ${{ matrix.rust }} && rustup target add x86_64-fortanix-unknown-sgx --toolchain ${{ matrix.rust }}"
+      - name: Build
+        run: "cargo +${{ matrix.rust }} check --target x86_64-fortanix-unknown-sgx --verbose"
